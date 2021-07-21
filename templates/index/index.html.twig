@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Talmeet{% endblock %}
+
+{% block body %}
+
+<div class="container mt-5">
+    <h1>Talmeet</h1>
+
+    <ul>
+        {% for category in categories %}
+            <li>{{ category.name }}</li>
+        {% endfor %}
+    </ul>
+
+</div>
+
+{% endblock %}

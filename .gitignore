@@ -3,6 +3,8 @@
 /.env.local
 /.env.local.php
 /.env.*.local
+.env
+.env.test
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /var/
@@ -17,4 +19,5 @@
 ###> phpunit/phpunit ###
 /phpunit.xml
 .phpunit.result.cache
+.idea
 ###< phpunit/phpunit ###
