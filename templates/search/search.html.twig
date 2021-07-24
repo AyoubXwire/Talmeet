@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Talmeet{% endblock %}
+
+{% block body %}
+
+<div class="container mt-5">
+    <h1>Find talents</h1>
+
+    <div class="row">
+        <div class="col-4">
+            <ul>
+                <li><a href="{{ path('search') }}">Show all</a></li>
+                {% for category in categories %}
+                    <li>{{ category.name }}</li>
+                    <ul>
+                        {% for talent in category.talents %}
+                            <li><a href="{{ path('search', {'talent': talent.id}) }}">{{ talent.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-8">
+            <ul>
+                {% for user in users %}
+                    <li><a href="/profile/{{ user.username }}">{{ user.username }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

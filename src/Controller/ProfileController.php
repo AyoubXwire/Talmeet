@@ -62,6 +62,8 @@ class ProfileController extends AbstractController
         $manager->persist($user);
         $manager->flush();
 
-        return $this->redirectToRoute('profile');
+        return $this->redirectToRoute('profile', [
+            'username' => $user->getUserIdentifier()
+        ]);
     }
 }

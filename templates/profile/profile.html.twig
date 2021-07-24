@@ -4,39 +4,52 @@
 
 {% block body %}
 
-<div class="container mt-5">
-    <div class="mb-1 pb-4" style="display:flex;align-items: center;border-bottom:1px solid #EEE;">
-        <img width="200px" height="200px" src="{{ user.avatar }}" alt="avatar">
-        <h2 class="ml-5">{{ user.username }}</h2>
+<div class="container profile mt-5">
+    <div class="mb-1 pb-4 profile-header">
+        <img width="150px" height="150px" src="{{ user.avatar }}" alt="avatar">
+        <div class="ml-5 profile-header-main">
+            <h2>{{ user.username }}</h2>
+            {% if not isCurrentUser %}
+                <a href="#" class="btn btn-primary request-contact">Request contact</a>
+            {% endif %}
+        </div>
     </div>
-    <p class="text-center">{{ user.bio }}</p>
-    <ul>
-        <li>{{ user.gender }}</li>
-        <li>{{ date('now').diff((user.birth)).format('%y years old') }}</li>
-        <li>{{ user.country }}</li>
-        <li>{{ user.city }}</li>
-    </ul>
+    <div class="elevated">
+        <p class="text-center my-3">{{ user.bio }}</p>
+    </div>
 
-    <h2>Talents</h2>
-    <ul>
-        {% if isCurrentUser %}
-            <li>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-talent">
-                    Add talent
-                </button>
-            </li>
-        {% endif %}
+    <div class="row mt-4">
+        <div class="col-6">
+            <div class="elevated">
+                <h3 class="mb-4">About</h3>
+                <p><strong>Gender:</strong> {{ user.gender }}</p>
+                <p><strong>Age:</strong> {{ date('now').diff((user.birth)).format('%y years old') }}</p>
+                <p><strong>Location:</strong> {{ user.country }}, {{ user.city }}</p>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="elevated">
+                <h3 class="mb-4">Talents</h3>
+                {% if isCurrentUser %}
+                    <p>
+                        <button class="btn btn-link p-0" data-toggle="modal" data-target="#add-talent">
+                            Add talent
+                        </button>
+                    </p>
+                {% endif %}
 
-        {% for talent in user.talents %}
-            <li>{{ talent.name }}</li>
-        {% endfor %}
-    </ul>
+                {% for talent in user.talents %}
+                    <p>{{ talent.name }}</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade" id="add-talent" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Add talents</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -47,15 +60,11 @@
                             <li>{{ category.name }}</li>
                                 <ul>
                                     {% for talent in category.talents %}
-                                        <li><a href="/add-talent?talent={{ talent.id }}">{{ talent.name }}</a></li>
+                                        <li><a href="{{ path('add_talent', {'talent': talent.id}) }}">{{ talent.name }}</a></li>
                                     {% endfor %}
                                 </ul>
                         {% endfor %}
                     </ul>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
